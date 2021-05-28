@@ -31,6 +31,7 @@ namespace OcrDemo
 
         private string OcrFile(string fileName)
         {
+            //https://ironsoftware.com/csharp/ocr/
             var ironTeseract = new IronTesseract();
 
             //设置语言识别项

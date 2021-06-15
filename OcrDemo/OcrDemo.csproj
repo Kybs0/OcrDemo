@@ -106,4 +106,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\IronOcr.Languages.Khmer.2020.11.2\build\IronOcr.Languages.Khmer.targets" Condition="Exists('..\packages\IronOcr.Languages.Khmer.2020.11.2\build\IronOcr.Languages.Khmer.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\IronOcr.Languages.Khmer.2020.11.2\build\IronOcr.Languages.Khmer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IronOcr.Languages.Khmer.2020.11.2\build\IronOcr.Languages.Khmer.targets'))" />
+    <Error Condition="!Exists('..\packages\IronOcr.Languages.Lao.2020.11.2\build\IronOcr.Languages.Lao.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IronOcr.Languages.Lao.2020.11.2\build\IronOcr.Languages.Lao.targets'))" />
+    <Error Condition="!Exists('..\packages\IronOcr.Languages.Myanmar.2020.11.2\build\IronOcr.Languages.Myanmar.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IronOcr.Languages.Myanmar.2020.11.2\build\IronOcr.Languages.Myanmar.targets'))" />
+  </Target>
+  <Import Project="..\packages\IronOcr.Languages.Lao.2020.11.2\build\IronOcr.Languages.Lao.targets" Condition="Exists('..\packages\IronOcr.Languages.Lao.2020.11.2\build\IronOcr.Languages.Lao.targets')" />
+  <Import Project="..\packages\IronOcr.Languages.Myanmar.2020.11.2\build\IronOcr.Languages.Myanmar.targets" Condition="Exists('..\packages\IronOcr.Languages.Myanmar.2020.11.2\build\IronOcr.Languages.Myanmar.targets')" />
 </Project>

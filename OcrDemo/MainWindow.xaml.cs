@@ -16,19 +16,28 @@ namespace OcrDemo
         public MainWindow()
         {
             InitializeComponent();
+            IronOcr.Installation.LicenseKey =
+                "IRONOCR.1016724958.21158-57EA70035F-C3CRNG-3QKKHMVRLXHW-T2ZNPUIZUNYQ-M2P25MXJQTKU-AQHHSAQHPJF2-IZ7LD5GY3VSN-QJI6BL-TXOIIZQQGLWAUA-DEPLOYMENT.TRIAL-W45PUY.TRIAL.EXPIRES.09.JUL.2021";
         }
 
         private async void SelectFileButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "图片|*.jpg;*.png;*.gif;*.jpeg;*.bmp|pdf文件|*.pdf";
-            var result = openFileDialog.ShowDialog(this);
-            if (result == true)
+            try
             {
-                var fileName = openFileDialog.FileName;
-                FileNameTextBlock.Text = fileName;
-                var orcText =await OcrFile(fileName);
-                OutputTextBox.Text = orcText;
+                var openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "图片|*.jpg;*.png;*.gif;*.jpeg;*.bmp|pdf文件|*.pdf";
+                var result = openFileDialog.ShowDialog(this);
+                if (result == true)
+                {
+                    var fileName = openFileDialog.FileName;
+                    FileNameTextBlock.Text = fileName;
+                    var orcText =await OcrFile(fileName);
+                    OutputTextBox.Text = orcText;
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show($"{exception.Message}\r\n{exception.StackTrace}");
             }
         }
 
@@ -47,12 +56,12 @@ namespace OcrDemo
             using (var input = new OcrInput(fileName))
             {
                 var ocrResult =await ironTeseract.ReadAsync(input);
-                var filePath = @"C:\Users\y24914\Desktop\新建文本文档.txt";
+                var filePath = @"C:\Users\y24914\Desktop\新建文本文档.doc";
                 if (File.Exists(filePath))
                 {
                    File.Delete(filePath);
                 }
-                File.AppendAllText(filePath, ocrResult.Text, Encoding.UTF8);
+                ocrResult.SaveAsTextFile(filePath);
                 return ocrResult.Text;
             }
         }
